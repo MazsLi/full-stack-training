@@ -1,0 +1,26 @@
+{
+  "name": "he10",
+  "version": "2.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron ./build/main.js",
+    "build": "./node_modules/.bin/webpack -w"
+  },
+  "keywords": [],
+  "author": "Acer-MarsLi",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "copy-webpack-plugin": "^4.2.3",
+    "debug": "^3.1.0",
+    "electron": "^1.7.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.8.1"
+  }
+}

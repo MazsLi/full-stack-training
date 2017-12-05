@@ -1,0 +1,18 @@
+{
+    "613": {
+        "name": "MarsLi",
+        "title": "Engineer",
+        "description": "I am a Dream Catcher!",
+        "numOfFriend": 100,
+        "joinDate": "2017/12/04",
+        "src": "res://mars.png"
+    },
+    "819": {
+        "name": "Gigi",
+        "title": "Engineer",
+        "description": "I am Gigi !!!",
+        "numOfFriend": 101,
+        "joinDate": "2017/12/04",
+        "src": "res://gigi.png"
+    }
+}

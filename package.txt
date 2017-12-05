@@ -1,0 +1,17 @@
+[babel-core]
+在原始檔案裡面使用 Babel 的 API 進行程式編譯 (babel-loader需要babel-core)
+[babel-loader] 
+webpack打包時同時進行babel轉換
+[babel-preset-es2017]
+ES2017轉碼規則(將ES2017語法轉為普通程式碼)
+[babel-preset-react]
+React轉碼規則
+
+[copy-webpack-plugin]
+webpack複製檔案套件
+[debug]
+除錯套件
+[electron]
+桌面應用框架
+[webpack]
+打包工具(像是ES6語法)

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<!-- 加上onload事件，在載入時設定jQuery -->
+		<script src="lib://jquery/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+		
+		<!-- 透過Protocol去存取放在lib內的semantic-ui -->
+		<link rel="stylesheet" type="text/css" href="lib://semantic-ui/semantic.min.css">
+		<script src="lib://semantic-ui/semantic.min.js"></script>
+
+		<title>Electron + React + SemanticUI + Webpack</title>
+	</head>
+	<body>
+		<div id="main"></div>
+		<script src="build://bundle.js"></script>
+	</body>
+</html>
+
+<!-- http://jqueryui.com/download/
+https://jquery.com/download/
+https://semantic-ui.com/introduction/getting-started.html -->
