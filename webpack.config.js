@@ -4,14 +4,14 @@ const Path = require('path');
 
 module.exports = {
   entry: {
-      // OutputName: InputName 
+      // 輸出的檔案名稱: 輸入的檔案路徑
       'main': ['./src/core/main.js'],
       'bundle': ['./src/render/main.js']
   },
   output: {
       path: Path.join( __dirname, 'build' ), // 要匯出的資料夾路徑
       publicPath: '/build',
-      filename: '[name].js' // name = entry裡面的key
+      filename: '[name].js' // name會自動換成entry裡面的key
   },
   plugins: [
       // 複製 html 資料夾到 {output}/html/

@@ -1,5 +1,5 @@
 {
-  "name": "he10",
+  "name": "fullstacktraining",
   "version": "2.0.0",
   "description": "",
   "main": "main.js",
@@ -8,8 +8,8 @@
     "build": "./node_modules/.bin/webpack -w"
   },
   "keywords": [],
-  "author": "Acer-MarsLi",
-  "license": "ISC",
+  "author": "MazsLi",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
