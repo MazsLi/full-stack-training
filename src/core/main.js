@@ -1,6 +1,6 @@
 
 const { app, BrowserWindow, protocol } = require( 'electron' );
-const Path = require( 'path' );
+const Path = require( 'path' ); // NodeJS的Path類別，用來處理路徑字串
 const debug = require( 'debug' );
 let mainWindow;
 
@@ -31,7 +31,6 @@ app.on( 'ready', () => {
     // console.log( app.getPath('downloads') );
     
     // 讀取主要的html
-    // mainWindow.loadURL( process.cwd() + '/build/html/index.html' );
     mainWindow.loadURL( 'Build://html/index.html' );
 
     // 開啟debug tool
