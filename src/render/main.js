@@ -8,7 +8,7 @@ import Fs from 'fs';
  * 利用NodeJS的FS來存取檔案，但是其實應該這段要寫在後端(core)
  * 之後可以利用Electron的IPC來去達到前後端溝通的功能，像讀寫檔案這種檔案處理應該要寫在後端
  */
-let personData = Fs.readFileSync( './res/person.json' );
+let personData = Fs.readFileSync( './assets/person.json' );
 personData = JSON.parse( personData );
 
 // Create and push react component to array

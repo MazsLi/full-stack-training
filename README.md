@@ -23,6 +23,7 @@
 * [Webpack 說明](#webpack)
 * [專案資料夾結構](#專案資料夾結構)
 * [開始建立Electron應用程式](#electron)
+* [使用Debug套件來偵錯](#debug)
 
 ## 安裝
 1. 首先你必須先安裝NodeJS，建議版本為v7.10以上，截至2017.12.05為止，我下載最新的NodeJS版本為v9.1.0  
@@ -37,23 +38,23 @@
 ## Package.json
 package.json內會列出所需要安裝的套件，除此之後比較重要的就是scripts
 ```javascript
-  "scripts": {
-    "start": "./node_modules/.bin/electron ./build/main.js",
-    "build": "./node_modules/.bin/webpack -w"
-  },
+"scripts": {
+  "start": "./node_modules/.bin/electron ./build/main.js",
+  "build": "./node_modules/.bin/webpack -w"
+},
 ```
 寫在scripts內的指令可以當作是腳本，舉例來說只要在跟package.json同目錄下使用
 ```javascript
-  npm run start 
+npm run start 
 ```
 那他就會自動幫我們跑以下指令，這段指令的意思就是利用Electron把 ./build/main.js 跑起來
 ```javascript
-  ./node_modules/.bin/electron ./build/main.js
+./node_modules/.bin/electron ./build/main.js
 ```
 
 下面這段每次寫程式都可以先把他run起來，webpack會幫你打包程式碼，後面加一個 -w webpack就會偵測當你的程式碼有變動的時候，就去幫你打包
 ```javascript
-  ./node_modules/.bin/webpack -w
+./node_modules/.bin/webpack -w
 ```
 
 ## Webpack
@@ -64,20 +65,20 @@ package.json內會列出所需要安裝的套件，除此之後比較重要的�
 
 首先我們會在entry內去指定要輸出的key(匯出檔案名稱)以及value(要打包的檔案路徑)，value可以是一個字串也可以是陣列(多對一)
 ```javascript
-  entry: {
-      // 輸出的檔案名稱: 輸入的檔案路徑
-      'main': ['./src/core/main.js'],
-      'bundle': ['./src/render/main.js']
-  },
+entry: {
+    // 輸出的檔案名稱: 輸入的檔案路徑
+    'main': ['./src/core/main.js'],
+    'bundle': ['./src/render/main.js']
+},
 ```
 
 然後再去指定輸出檔案的路徑(webpack將你指定在entry內的程式碼打包後要輸出的位置)
 ```javascript
-  output: {
-      path: Path.join( __dirname, 'build' ), // 要匯出的資料夾路徑
-      publicPath: '/build',
-      filename: '[name].js' // name會自動換成entry裡面的key
-  },
+output: {
+    path: Path.join( __dirname, 'build' ), // 要匯出的資料夾路徑
+    publicPath: '/build',
+    filename: '[name].js' // name會自動換成entry裡面的key
+},
 ```
 
 要注意的是webpack預設編譯的環境是針對web，如果是利用Electron來做開發的要記得加上
@@ -93,8 +94,56 @@ webpack會為Electron提供編譯環境
 - res - 資源檔資料夾
 - src - 原始程式碼
   - core - 後端程式碼
-  - render - 前端程式碼 
+  - render - 前端程式碼
 
 ## Electron
-好～這裡就要開始寫程式了，electron你可以把他想像成是一個瀏覽器(核心是Chromium)，除了要寫前端的UI以及JS來控制以外，我們還需要寫JS來控制electron，所以首先我們先寫一隻JS來建立electron視窗。
-大家可以先看 [./src/core/main.js](./src/core/main.js) 這隻JS
+好～這裡就要開始寫程式了，這邊會帶大家一步步完成，一步步解說。  
+electron你可以把他想像成是一個瀏覽器(核心是Chromium)，除了要寫前端的UI以及JS來控制以外，我們還需要寫JS來控制electron，所以首先我們先寫一隻JS來建立electron視窗。
+大家可以先看 [./src/core/main.js](./src/core/main.js) ，在這裡因為我們有透過Babel將我們的程式碼作轉碼的動作，所以可以使用es6的語法，es6用法可以參考:
+ [一看就懂的 React ES5、ES6+ 常見用法對照表](http://blog.kdchang.cc/2016/04/04/react-react-native-es5-es6-cheat-sheet/)
+
+[app](https://electronjs.org/docs/api/app)這個類別是用來處理及監控Electron的生命週期(lifecycle)，所以在一開始我們需要透過app去監聽Electron完成初始化動作的ready事件
+```javascript
+app.on( 'ready', () => {
+
+})
+```
+
+但是當app ready後他並不會幫你產生一個視窗，你必須透過[BrowserWindow](https://electronjs.org/docs/api/browser-window)去產生視窗，這裡我們只設定他的title，但其實還有很多參數可以設定，像是寬高、要不要顯示、座標、Icon等等的設定。
+```javascript
+let mainWindow = new BrowserWindow({
+    title: 'FullStackTraining'
+});
+```
+建立完視窗後，再來就是把我們寫好的前端網頁載入進來，
+```javascript
+// 讀取主要的html
+mainWindow.loadURL( 'Build://html/index.html' );
+```
+大家應該很疑惑Build是什麼東西，在這裡要介紹一下Electron的另一個類別protocol，他主要在做的事是讓你可以客製化自己的protocol，好處是可以方便使用，方便管理，還有安全性的問題(別人不會一眼就知道你的檔案存放位置)，所以我們在[./src/core/main.js](./src/core/main.js)可以找到一個我們自定義的函式registerProtocol，來去自定義protocol。
+```html
+// 第一個參數是protocol的名稱，第二個參數是要指到的真實位置
+registerProtocol( 'build', 'D://TEST/' );
+
+// 用法 (index.html內)
+<script src="build://bundle.js"></script>
+// 等於
+<script src="D://TEST/bundle.js"></script>
+```
+
+## Debug
+再來介紹裡面用到的[debug](https://github.com/visionmedia/debug)這個套件的用法，平常我們可能除錯的時候都會下一大堆console.log或是alert (我以前也是)。debug這個套件的差異在於它可以根據你所下的指令跟情境不同而去決定要顯示哪些log。
+舉例來說下面這行log:
+```javascript
+debug('core:app')('ready');
+```
+我想要讓他印出來的話怎麼做呢，我們上面[package.json](#package.json)有教過script的用法，我們只需要在前面加上debug的語法就可以了
+```javascript
+// log全部顯示
+debug=* & npm start
+
+// 只顯示core:app的log
+debug=core:app & npm start
+```
+
+

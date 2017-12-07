@@ -1,20 +1,20 @@
 
-const { app, BrowserWindow, protocol } = require( 'electron' );
-const Path = require( 'path' ); // NodeJS的Path類別，用來處理路徑字串
-const debug = require( 'debug' );
-let mainWindow;
+import { app, BrowserWindow, protocol } from 'electron' ;
+import Path from 'path'; // Node.js的Path類別，用來處理檔案和資料夾路徑
+import debug from 'debug'; // 除錯工具
 
+// 監聽當Electron完成初始化的動作
 app.on( 'ready', () => {
     
     registerProtocol( 'build', Path.join( process.cwd(), 'build' ) );
     registerProtocol( 'lib', Path.join( process.cwd(), 'src/render/lib' ) );
-    registerProtocol( 'res', Path.join( process.cwd(), 'res' ) );
+    registerProtocol( 'assets', Path.join( process.cwd(), 'assets' ) );
 
     // command: set debug=* & npm start
     debug('core:app')('ready');
 
-    mainWindow = new BrowserWindow({
-        title: app.getPath('exe')
+    let mainWindow = new BrowserWindow({
+        title: 'FullStackTraining'
     });
     
     // console.log( __filename );       // 執行檔案路徑
@@ -41,7 +41,7 @@ app.on( 'ready', () => {
 });
 
 // Register protocol (need after app ready)
-registerProtocol = ( name, refDir ) => {
+var registerProtocol = ( name, refDir ) => {
 
     // Protocol 名稱開頭不可為大寫
     name = name.toLowerCase();

@@ -5,7 +5,7 @@
         "description": "I am a Dream Catcher!",
         "numOfFriend": 100,
         "joinDate": "2017/12/04",
-        "src": "res://mars.png"
+        "src": "assets://mars.png"
     },
     "819": {
         "name": "Gigi",
@@ -13,6 +13,6 @@
         "description": "I am Gigi !!!",
         "numOfFriend": 101,
         "joinDate": "2017/12/04",
-        "src": "res://gigi.png"
+        "src": "assets://gigi.png"
     }
 }
