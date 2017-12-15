@@ -17,11 +17,13 @@ app.on( 'ready', () => {
         title: 'FullStackTraining'
     });
     
+    // Node.js 全域變數
     // console.log( __filename );       // 執行檔案路徑
     // console.log( __dirname );        // 執行檔案所在資料夾路徑
     // console.log( process.cwd() );    // 下命令列的資料夾路徑
-    // console.log( app.getAppPath() ); // Electron執行的資料夾路徑
-
+    
+    // 執行Electron的路徑
+    // console.log( app.getAppPath() ); 
     // 取得使用者某些資料夾路徑
     // console.log( app.getPath('home') );
     // console.log( app.getPath('temp') );

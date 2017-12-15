@@ -19,11 +19,13 @@
 
 ## 大綱
 * [安裝](#安裝)
-* [Package.json 說明](#package.json)
+* [Package.json 說明](#packagejson)
 * [Webpack 說明](#webpack)
 * [專案資料夾結構](#專案資料夾結構)
-* [開始建立Electron應用程式](#electron)
+* [建立Electron應用程式 (main.js)](#electron)
 * [使用Debug套件來偵錯](#debug)
+* [前端進入點 (index.html)](#indexhtml)
+* [開始撰寫React](#react)
 
 ## 安裝
 1. 首先你必須先安裝NodeJS，建議版本為v7.10以上，截至2017.12.05為止，我下載最新的NodeJS版本為v9.1.0  
@@ -131,6 +133,24 @@ registerProtocol( 'build', 'D://TEST/' );
 <script src="D://TEST/bundle.js"></script>
 ```
 
+在Node.js與Electron中有些全域的變數可以拿來使用，在這邊作一些介紹
+```javascript
+// Node.js 全域變數
+// console.log( __filename );       // 執行檔案路徑
+// console.log( __dirname );        // 執行檔案所在資料夾路徑
+// console.log( process.cwd() );    // 下命令列的資料夾路徑
+
+// 執行Electron的路徑
+// console.log( app.getAppPath() ); 
+// 取得使用者某些資料夾路徑
+// console.log( app.getPath('home') );
+// console.log( app.getPath('temp') );
+// console.log( app.getPath('exe') );
+// console.log( app.getPath('desktop') );
+// console.log( app.getPath('documents') );
+// console.log( app.getPath('downloads') );
+```
+
 ## Debug
 再來介紹裡面用到的[debug](https://github.com/visionmedia/debug)這個套件的用法，平常我們可能除錯的時候都會下一大堆console.log或是alert (我以前也是)。debug這個套件的差異在於它可以根據你所下的指令跟情境不同而去決定要顯示哪些log。
 舉例來說下面這行log:
@@ -146,4 +166,35 @@ debug=* & npm start
 debug=core:app & npm start
 ```
 
+## index.html
+剛剛我們在main.js用electron的app讀取了這個html，並在裡面載入我們先下載好的jQuery、semanticUI，這裡我們也是應用剛剛所提到的protocol，來去載入script。
+在index.html內我們最主要要做的是載入webpack幫我們打包好的前端JS(bundle,js)。
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+		<!-- 加上onload事件，在載入時設定jQuery -->
+		<script src="lib://jquery/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+		
+		<!-- 透過Protocol去存取放在lib內的semantic-ui -->
+		<link rel="stylesheet" type="text/css" href="lib://semantic-ui/semantic.min.css">
+		<script src="lib://semantic-ui/semantic.min.js"></script>
+
+		<title>Electron + React + SemanticUI + Webpack</title>
+	</head>
+	<body>
+		<div id="main"></div>
+		<script src="build://bundle.js"></script>
+	</body>
+</html>
+```
+
+## React
+如果大家對React不熟悉的可以先看看一些不錯的教學網站:  
+[React Component Lifecycle & State vs Props](https://noootown.gitbooks.io/deeperience-react-native-boilerplate/content/Basic/Reactjs%20Lifecycle%20&%20State%20vs%20Props.html)
+
+
+再來我們看\src\render\這個用來放前端程式碼的資料夾，裡面有一個main.js。  
+裡面做的事情就是去我們assets資料夾內將使用者的json讀出來，再把資料塞給我們做好的React element 把它render出來，
