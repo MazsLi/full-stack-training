@@ -39,7 +39,7 @@ app.on( 'ready', () => {
     mainWindow.webContents.openDevTools({
         mode: 'right', // right, bottom, undocked, detach
     });
-    
+
 });
 
 // Register protocol (need after app ready)

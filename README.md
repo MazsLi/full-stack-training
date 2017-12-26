@@ -26,6 +26,7 @@
 * [使用Debug套件來偵錯](#debug)
 * [前端進入點 (index.html)](#indexhtml)
 * [開始撰寫React](#react)
+* [利用SemanticUI來美化](#semanticui)
 
 ## 安裝
 1. 首先你必須先安裝NodeJS，建議版本為v7.10以上，截至2017.12.05為止，我下載最新的NodeJS版本為v9.1.0  
@@ -192,9 +193,15 @@ debug=core:app & npm start
 ```
 
 ## React
+React component可以先把他想像成是OO的概念，你先寫好一個component之後，可以一直去new出新的物件，你只需要給他不同的初始值，而他自己會去決定什麼時候要更新。
 如果大家對React不熟悉的可以先看看一些不錯的教學網站:  
 [React Component Lifecycle & State vs Props](https://noootown.gitbooks.io/deeperience-react-native-boilerplate/content/Basic/Reactjs%20Lifecycle%20&%20State%20vs%20Props.html)
 
-
 再來我們看\src\render\這個用來放前端程式碼的資料夾，裡面有一個main.js。  
-裡面做的事情就是去我們assets資料夾內將使用者的json讀出來，再把資料塞給我們做好的React element 把它render出來，
+裡面做的事情就是去我們assets資料夾內將使用者的json讀出來，再把資料塞給我們做好的React element 把它render出來。  
+而我們的component資料夾內我目前寫了一個PersonalCard的component，然後我會在main.js裡面去依照外部json的值而決定我要new出幾個PersonalCard物件，然後把它顯示在畫面上。
+
+## SemanticUI
+
+[SemanticUI](https://semantic-ui.com/introduction/getting-started.html)
+在這裡我們利用SemanticUI來美化我們的PersonalCard，在官網上可以看到使用範例。
