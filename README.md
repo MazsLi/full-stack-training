@@ -74,6 +74,7 @@ entry: {
     'bundle': ['./src/render/main.js']
 },
 ```
+在這邊要提醒一下(被搞過)，通常前後端的js應該要分開編譯，因為前端會用到的target是web，後端的通常會用node，而且後端的js會用externals來避免把node_modules的lib包進去，因為很多都是動態呼叫，但是在前端的包法內不能用externals，否則會出現類似require is not a function的錯誤訊息。
 
 然後再去指定輸出檔案的路徑(webpack將你指定在entry內的程式碼打包後要輸出的位置)
 ```javascript
