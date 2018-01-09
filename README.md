@@ -162,11 +162,13 @@ debug('core:app')('ready');
 我想要讓他印出來的話怎麼做呢，我們上面[package.json](#package.json)有教過script的用法，我們只需要在前面加上debug的語法就可以了
 ```javascript
 // log全部顯示
-debug=* & npm start
+set debug=* & npm start
 
 // 只顯示core:app的log
-debug=core:app & npm start
+set debug=core:app & npm start
 ```
+
+有一個很重要的一點是，如果你是在windows環境下的話前面要加上set，不然會找不到這個指令，這在官網上可以找到。
 
 ## index.html
 剛剛我們在main.js用electron的app讀取了這個html，並在裡面載入我們先下載好的jQuery、semanticUI，這裡我們也是應用剛剛所提到的protocol，來去載入script。
