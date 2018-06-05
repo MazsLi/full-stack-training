@@ -21,6 +21,7 @@
     "electron": "^1.7.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "webpack": "^3.8.1"
+    "webpack": "^4.10.2",
+		"webpack-cli": "^3.0.1"
   }
 }

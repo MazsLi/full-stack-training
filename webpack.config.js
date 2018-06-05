@@ -1,51 +1,101 @@
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const Path = require('path');
-const fs = require('fs');
+const Path = require('path'); 
+const Fs = require('fs');
+const webpack = require('webpack');
 
-module.exports = {
-    entry: {
-        // 輸出的檔案名稱: 輸入的檔案路徑
-        'main': ['./src/core/main.js'],
-        'bundle': ['./src/render/main.js']
-    },
-    output: {
-        path: Path.join( __dirname, 'build' ), // 要匯出的資料夾路徑
-        publicPath: '/build',
-        filename: '[name].js' // name會自動換成entry裡面的key
-    },
-    plugins: [
-        // 複製 html 資料夾到 {output}/html/
-        new CopyWebpackPlugin([
-            { from: Path.join( __dirname, 'src/render/html' ), to: 'html' }
-        ])
-    ],
-    // 防止把某些import的modules包進去bundle內(run time再去執行)
-    externals: fs.readdirSync('node_modules').map(function(module) {
-        var obj = {};
-        obj[module] = 'commonjs ' + module;
-        return obj;
-    }),
-    target: 'electron', // target預設值是web，要設為Electron，webpack會為Electron提供編譯環境
-    module: {
-        rules: [
-            {
-                // 用Babel打包React ES2017語法
-                test: /\.(js|jsx)?$/,
-                loader: 'babel-loader',
-                options: {
-                    presets: [ 'react', 'es2017', 'stage-0' ]
+module.exports = [
+    /* 前端 */
+    {
+		entry: {
+            /* outputName: inputName */
+            bundle: ['./src/render/main.js'],
+
+            /* 拋轉視窗 */
+            extWindow    :['./src/render/main4extWindow.js'],
+			observWindow :['./src/render/main4observWindow.js'],
+			outWindow    :['./src/render/main4outWindow.js']
+		},
+		output: {
+            path: Path.join( __dirname, 'build' ), /* 要匯出的資料夾路徑 */
+            publicPath: '/build',
+            filename: '[name].js' /* name: entry 裡面的 key */
+        },
+		target: 'electron-renderer', /* webpack 會為 target 提供編譯環境，預設為 web */
+		plugins: [
+            /* CopyWebpackPlugin: 複製檔案的 plugin */
+			new CopyWebpackPlugin([
+                { from: Path.join( __dirname, 'src/render/html' ), to: 'html' }
+            ])
+		],
+		module: {
+            rules: [
+                {
+                    // 用 Babel 打包 React ES2017 語法
+                    test: /\.(js|jsx)?$/,
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [ 'react', 'env', 'stage-0' ]
+                    }
+                },
+                {   
+                    test: /\.(less|css)?$/, 
+                    loader: 'style!css!less'
                 }
-            }
-        ]
+            ]
+        },
+        resolve: {
+            /* 設定後 import 或 require 路徑只需要給檔名而不用加副檔名 */
+            extensions: [ '.js', '.jsx' ] 
+        },
     },
-    resolve: {
-        // 設定後 import或require 路徑只需要給檔名而不用加副檔名
-        extensions: [ '.js', '.jsx' ] 
+    
+    /* 後端 */
+    {
+		entry: {
+            'main': './src/core/main.js'
+		},
+		output: {
+            path: Path.join( __dirname, 'build' ),
+            publicPath: '/build',
+			filename: '[name].js'
+		},
+		target: 'electron-main',
+		externals: Fs.readdirSync('node_modules').map( (module) => {
+			var obj = {};
+			obj[module] = 'commonjs ' + module;
+			return obj;
+		}),
+		plugins: [
+			new webpack.ExternalsPlugin('commonjs', [
+	            'desktop-capturer',
+	            'electron',
+	            'ipc',
+	            'ipc-renderer',
+	            'native-image',
+	            'remote',
+	            'web-frame',
+	            'clipboard',
+	            'crash-reporter',
+	            'screen',
+	            'shell'
+	        ])
+		],
+		module: {
+            rules: [
+                {
+                    test: /\.(js)?$/,
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [ 'react', 'env', 'stage-0' ]
+                    }
+                },
+                {
+					test: /\.json?$/,
+					loader: 'json-loader'
+				},
+            ]
+        }
     },
-    // 為了讓 __filename 、 __dirname顯示正確路徑
-    node: {
-		__filename: false,
-		__dirname: false
-	}
-}
+   
+]

@@ -38,6 +38,13 @@
   . webpack.config.js - 這份是讓webpack用來知道要把什麼檔案包什麼檔案，還有一些針對Babel等等的設定  
 4. 在專案目錄內透過CMD執行指令 ``` npm install ``` ，這行指令是讓npm去安裝套件用的指令，但是如果後面沒有給參數的話，就會去安裝package.json內有列的所有套件
 
+[眉眉角角]  
+如果你有安裝原生模組的需求，在安裝完之後需要 rebuild electron。  
+```javascript
+npm rebuild --runtime=electron --target=2.0.2 --disturl=https://atom.io/download/atom-shell --abi=59 --msvs_version=2013
+```
+target 是 electron 的版本，abi 可以到[這裡](https://github.com/mapbox/node-pre-gyp/blob/master/lib/util/abi_crosswalk.json)去找與你目前安裝的nodejs相對應的版本號
+
 ## Package.json
 package.json內會列出所需要安裝的套件，除此之後比較重要的就是scripts
 ```javascript
@@ -87,7 +94,8 @@ output: {
 
 要注意的是webpack預設編譯的環境是針對web，如果是利用Electron來做開發的要記得加上
 ```javascript
-target: 'electron'
+target: 'electron-renderer' // Compile for Electron for renderer process
+target: 'electron-main'     // Compile for Electron for main process.
 ```
 webpack會為Electron提供編譯環境
 
