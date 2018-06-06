@@ -10,11 +10,6 @@ module.exports = [
 		entry: {
             /* outputName: inputName */
             bundle: ['./src/render/main.js'],
-
-            /* 拋轉視窗 */
-            extWindow    :['./src/render/main4extWindow.js'],
-			observWindow :['./src/render/main4observWindow.js'],
-			outWindow    :['./src/render/main4outWindow.js']
 		},
 		output: {
             path: Path.join( __dirname, 'build' ), /* 要匯出的資料夾路徑 */
@@ -30,14 +25,17 @@ module.exports = [
 		],
 		module: {
             rules: [
+                /* 利用 Babel 轉譯打包 React ES2017 語法 */
                 {
-                    // 用 Babel 打包 React ES2017 語法
-                    test: /\.(js|jsx)?$/,
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [ 'react', 'env', 'stage-0' ]
-                    }
-                },
+					test: /\.(js|jsx)?$/,
+					exclude: /(node_modules|bower_components)/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: [ 'env', 'react', 'stage-0' ]
+						}
+					}
+				},
                 {   
                     test: /\.(less|css)?$/, 
                     loader: 'style!css!less'
@@ -45,7 +43,7 @@ module.exports = [
             ]
         },
         resolve: {
-            /* 設定後 import 或 require 路徑只需要給檔名而不用加副檔名 */
+            /* 設定 extensions 後 import 或 require 路徑只需要給檔名而不用加副檔名 */
             extensions: [ '.js', '.jsx' ] 
         },
     },
@@ -66,30 +64,33 @@ module.exports = [
 			obj[module] = 'commonjs ' + module;
 			return obj;
 		}),
-		plugins: [
-			new webpack.ExternalsPlugin('commonjs', [
-	            'desktop-capturer',
-	            'electron',
-	            'ipc',
-	            'ipc-renderer',
-	            'native-image',
-	            'remote',
-	            'web-frame',
-	            'clipboard',
-	            'crash-reporter',
-	            'screen',
-	            'shell'
-	        ])
-		],
+		// plugins: [
+		// 	new webpack.ExternalsPlugin('commonjs', [
+	    //         'desktop-capturer',
+	    //         'electron',
+	    //         'ipc',
+	    //         'ipc-renderer',
+	    //         'native-image',
+	    //         'remote',
+	    //         'web-frame',
+	    //         'clipboard',
+	    //         'crash-reporter',
+	    //         'screen',
+	    //         'shell'
+	    //     ])
+		// ],
 		module: {
             rules: [
                 {
-                    test: /\.(js)?$/,
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [ 'react', 'env', 'stage-0' ]
-                    }
-                },
+					test: /\.(js)?$/,
+					exclude: /(node_modules|bower_components)/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: [ 'env', 'stage-0' ]
+						}
+					}
+				},
                 {
 					test: /\.json?$/,
 					loader: 'json-loader'

@@ -5,23 +5,23 @@
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron ./build/main.js",
-    "webpack": "./node_modules/.bin/webpack -w"
+    "webpack": "./node_modules/.bin/webpack -w --mode development"
   },
   "keywords": [],
   "author": "MazsLi",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.2",
-    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "copy-webpack-plugin": "^4.2.3",
+    "copy-webpack-plugin": "^4.5.1",
     "debug": "^3.1.0",
     "electron": "^1.7.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "webpack": "^4.10.2",
-		"webpack-cli": "^3.0.1"
+    "webpack-cli": "^3.0.1"
   }
 }

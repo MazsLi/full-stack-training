@@ -29,7 +29,8 @@
 * [利用SemanticUI來美化](#semanticui)
 
 ## 安裝
-1. 首先你必須先安裝NodeJS，建議版本為v7.10以上，截至2017.12.05為止，我下載最新的NodeJS版本為v9.1.0  
+1. 首先你必須先安裝NodeJS，建議版本為v7.10以上，截至2018.06.06為止，我下載最新的NodeJS版本為v9.1.0  
+2. 安裝 python、visual studio 2015(node-gyp不兼容2017)
 2. 然後準備好你寫程式的IDE，像是Sublime Text或是Visual Studio Code，我本身是用Visual Studio Code (外掛模組多又整合Git、CMD)
 3. 將此專案Download下來，首先先解釋除了資料夾內的幾個檔案  
   . package.json - 用來記錄此專案會用到的函式庫(Library)  
@@ -39,7 +40,7 @@
 4. 在專案目錄內透過CMD執行指令 ``` npm install ``` ，這行指令是讓npm去安裝套件用的指令，但是如果後面沒有給參數的話，就會去安裝package.json內有列的所有套件
 
 [眉眉角角]  
-如果你有安裝原生模組的需求，在安裝完之後需要 rebuild electron。  
+如果你有安裝原生模組的需求，在安裝完之後需要 rebuild electron，因為我們安裝模組都是基於本機端的 node，需要針對 electron 去 rebuild。
 ```javascript
 npm rebuild --runtime=electron --target=2.0.2 --disturl=https://atom.io/download/atom-shell --abi=59 --msvs_version=2013
 ```
