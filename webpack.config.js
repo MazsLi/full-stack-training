@@ -25,16 +25,11 @@ module.exports = [
 		],
 		module: {
             rules: [
-                /* 利用 Babel 轉譯打包 React ES2017 語法 */
+                /* 利用 Babel 轉譯打包 React ES2017 語法，會去吃 .babelrc 的設定 */
                 {
 					test: /\.(js|jsx)?$/,
 					exclude: /(node_modules|bower_components)/,
-					use: {
-						loader: 'babel-loader',
-						options: {
-							presets: [ 'env', 'react', 'stage-0' ]
-						}
-					}
+					loader: 'babel-loader'
 				},
                 {   
                     test: /\.(less|css)?$/, 
@@ -84,12 +79,7 @@ module.exports = [
                 {
 					test: /\.(js)?$/,
 					exclude: /(node_modules|bower_components)/,
-					use: {
-						loader: 'babel-loader',
-						options: {
-							presets: [ 'env', 'stage-0' ]
-						}
-					}
+					loader: 'babel-loader'
 				},
                 {
 					test: /\.json?$/,
