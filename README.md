@@ -42,9 +42,11 @@
 [眉眉角角]  
 如果你有安裝原生模組的需求，在安裝完之後需要 rebuild electron，因為我們安裝模組都是基於本機端的 node，需要針對 electron 去 rebuild。
 ```javascript
-npm rebuild --runtime=electron --target=2.0.2 --disturl=https://atom.io/download/atom-shell --abi=59 --msvs_version=2013
+npm rebuild --runtime=electron --target=2.0.2 --disturl=https://atom.io/download/atom-shell --abi=59 --msvs_version=2015
 ```
 target 是 electron 的版本，abi 可以到[這裡](https://github.com/mapbox/node-pre-gyp/blob/master/lib/util/abi_crosswalk.json)去找與你目前安裝的nodejs相對應的版本號
+
+還有要注意的是 node.js、electron、ffi dll 這些位元版本都要一致，更多 node.js 的雷，請[參考](https://medium.com/something-about-javascript/node-js-aac6845ec595)
 
 ## Package.json
 package.json內會列出所需要安裝的套件，除此之後比較重要的就是scripts
