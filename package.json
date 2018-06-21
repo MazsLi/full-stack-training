@@ -17,11 +17,13 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
     "debug": "^3.1.0",
     "electron": "^1.7.9",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "webpack": "^4.10.2",
-    "webpack-cli": "^3.0.1"
+    "webpack-cli": "^3.0.1",
+    "webpack-node-externals": "^1.7.2"
   }
 }

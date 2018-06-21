@@ -84,7 +84,6 @@ entry: {
     'bundle': ['./src/render/main.js']
 },
 ```
-在這邊要提醒一下(被搞過)，通常前後端的js應該要分開編譯，因為前端會用到的target是web，後端的通常會用node，而且後端的js會用externals來避免把node_modules的lib包進去，因為很多都是動態呼叫，但是在前端的包法內不能用externals，否則會出現類似require is not a function的錯誤訊息。
 
 然後再去指定輸出檔案的路徑(webpack將你指定在entry內的程式碼打包後要輸出的位置)
 ```javascript
@@ -101,6 +100,8 @@ target: 'electron-renderer' // Compile for Electron for renderer process
 target: 'electron-main'     // Compile for Electron for main process.
 ```
 webpack會為Electron提供編譯環境
+
+如果要看更完整的說明可以參考 [[Node.js] 模組整合工具 Webpack](https://medium.com/something-about-javascript/node-js-%E6%A8%A1%E7%B5%84%E6%95%B4%E5%90%88%E5%B7%A5%E5%85%B7-webpack-9cb6754d582e)
 
 其他相關設定在webpack.config.js內都有詳細說明。
 
