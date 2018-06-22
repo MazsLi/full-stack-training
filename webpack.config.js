@@ -76,8 +76,8 @@ module.exports = [
 			 * import Test2 from 'xyz' 才能解析
 			 */
 			alias: {
-				Core: path.resolve(__dirname, 'src/core/'),
-				Render: path.resolve(__dirname, 'src/render/')
+				Core: Path.resolve(__dirname, 'src/core/'),
+				Render: Path.resolve(__dirname, 'src/render/')
 			}
 
         },
